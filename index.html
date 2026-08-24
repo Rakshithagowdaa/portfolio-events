@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAKSHITHA B · Event Host & Coordinator</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== CSS VARIABLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #111111;
+      --bg-secondary: #1A1A1A;
+      --card-bg: #191919;
+      --text-primary: #F5F1E8;
+      --text-secondary: #B8B1A5;
+      --accent: #C9A96E;
+      --accent-light: #E2C994;
+      --border-gold: rgba(201, 169, 110, 0.20);
+      --font-display: 'Playfair Display', serif;
+      --font-ui: 'Manrope', sans-serif;
+      --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== UTILITY ===== */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-padding {
+      padding: 6rem 0;
+    }
+
+    .gold-accent {
+      color: var(--accent);
+    }
+
+    .text-secondary {
+      color: var(--text-secondary);
+    }
+
+    .uppercase-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .display-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-subhead {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease;
+      background: transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(17, 17, 17, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-gold);
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: var(--text-primary);
+      transition: 0.3s;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 6rem 0;
+      background: var(--bg-primary);
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-content {
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--border-gold);
+      padding: 0.4rem 1.2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      border-radius: 100px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title .gold {
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-text {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: left;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .hero-image {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      background: #2a2a2a;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* ===== SPLIT ===== */
+    .split-section {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-gold);
+      border-bottom: 1px solid var(--border-gold);
+    }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      padding: 4rem 0;
+    }
+
+    .split-card {
+      padding: 2rem;
+      background: var(--card-bg);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+    }
+
+    .split-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .split-card ul {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .split-card ul li {
+      padding: 0.3rem 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .split-card ul li::before {
+      content: '◆';
+      color: var(--accent);
+      font-size: 0.5rem;
+    }
+
+    .split-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      background: transparent;
+      border: none;
+    }
+
+    .split-center p {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--text-primary);
+      max-width: 300px;
+    }
+
+    .split-center .gold {
+      color: var(--accent);
+    }
+
+    /* ===== ABOUT ===== */
+    .about-grid {
+  display: block;
+  max-width: 900px;
+    }
+
+    .about-text p {
+      color: var(--text-secondary);
+      margin-bottom: 1.2rem;
+      font-size: 1.05rem;
+    }
+
+    .about-collage {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .about-collage .placeholder {
+      background: #2a2a2a;
+      aspect-ratio: 1/1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+
+    .about-collage .placeholder:first-child {
+      grid-row: span 2;
+      aspect-ratio: 3/4;
+    }
+
+    /* ===== CASE STUDY ===== */
+    .case-study {
+      background: var(--bg-secondary);
+    }
+
+    .case-header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-gold);
+      padding-bottom: 2rem;
+    }
+
+    .case-meta {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .case-meta-item {
+      font-size: 0.85rem;
+    }
+
+    .case-meta-item strong {
+      color: var(--accent);
+      display: block;
+      font-weight: 700;
+    }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .case-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-gold);
+    }
+
+    .case-card h4 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .case-card ul {
+      list-style: none;
+    }
+
+    .case-card ul li {
+      padding: 0.3rem 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .case-card ul li::before {
+      content: '✦';
+      color: var(--accent);
+      font-size: 0.7rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .skill-tag {
+      background: rgba(201,169,110,0.12);
+      color: var(--accent-light);
+      padding: 0.2rem 0.8rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid var(--border-gold);
+    }
+
+    /* ===== GALLERY ===== */
+
+    .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-top: 2rem;
+    width: 100%;
+    }
+
+    .gallery-image {
+    width: 70%;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #2a2a2a;
+    margin: 0 auto;
+    }
+
+    .gallery-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+    }
+
+    .gallery-image:hover img {
+    transform: scale(1.03);
+    }
+
+    /* ===== STATS ===== */
+    .stats-section {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-gold);
+      border-bottom: 1px solid var(--border-gold);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .stats-grid .stat-number {
+      font-size: 3rem;
+    }
+
+    /* ===== SKILLS ===== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .skills-col {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-gold);
+    }
+
+    .skills-col h4 {
+      font-family: var(--font-display);
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .skills-col ul {
+      list-style: none;
+    }
+
+    .skills-col ul li {
+      padding: 0.3rem 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* ===== QUOTE BANNER ===== */
+    .quote-banner {
+      padding: 5rem 0;
+      text-align: center;
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border-gold);
+      border-bottom: 1px solid var(--border-gold);
+    }
+
+    .quote-banner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+
+    .quote-banner h2 .gold {
+      color: var(--accent);
+    }
+
+    .quote-banner p {
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    /* ===== RECOGNITION IMAGE ===== */
+    /* ===== RECOGNITION ===== */
+
+    .recognition-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    }
+
+    .recognition-image {
+    width: 80%;
+    height: 450px;
+    margin-left: auto;
+    border-radius: 8px;
+    overflow: hidden; 
+    }
+
+    .recognition-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+    }
+    
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .edu-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-gold);
+    }
+
+    .edu-card h4 {
+      font-family: var(--font-display);
+      color: var(--accent);
+      font-size: 1.3rem;
+    }
+
+    .edu-card p {
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+    }
+
+    /* ===== CONTACT ===== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .contact-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-item label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .contact-item a, .contact-item p {
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      text-decoration: none;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid var(--border-gold);
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-image { height: 350px; }
+      .split-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .case-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .recognition-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 80px; left: 0; width: 100%; background: var(--bg-primary); padding: 2rem; gap: 1.5rem; border-bottom: 1px solid var(--border-gold); }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title { font-size: 3rem; }
+      .hero-stats { gap: 1.5rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .container { padding: 0 1.5rem; }
+      .section-padding { padding: 3rem 0; }
+    }
+
+    .placeholder-img {
+      background: linear-gradient(145deg, #2a2a2a, #1f1f1f);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5a5a5a;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 1rem;
+      border: 1px dashed #333;
+      width: 100%;
+      height: 100%;
+      min-height: 120px;
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== NAV ===== -->
+  <nav id="navbar">
+    <a href="#" class="logo">R<span>.</span>B</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#chiguru">Events</a></li>
+      <li><a href="#recognition">Recognition</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="hero-badge">Event Host · Coordinator</span>
+        <h1 class="hero-title">RAKSHITHA <span class="gold">B</span></h1>
+        <div class="hero-subtitle">EVENT HOST <span class="gold">&amp;</span> EVENT COORDINATOR</div>
+        <p class="hero-text">Hosting audiences. Coordinating experiences. Creating meaningful events.<br>4 years of event experience through Youth for Seva.</p>
+        <div class="hero-stats">
+          <div class="stat-item"><span class="stat-number">4+</span><span class="stat-label">Years Chiguru</span></div>
+          <div class="stat-item"><span class="stat-number">1,500+</span><span class="stat-label">Students</span></div>
+          <div class="stat-item"><span class="stat-number">35+</span><span class="stat-label">Schools</span></div>
+          <div class="stat-item"><span class="stat-number">2022–26</span><span class="stat-label">Youth for Seva</span></div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="assets/images/hero/hero.jpeg" 
+         alt="Rakshitha B hosting an event">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOST + COORDINATOR SPLIT ===== -->
+  <section class="section-padding" id="skills" style="background:var(--bg-secondary);">
+    <div class="container">
+      <span class="uppercase-label">Core Competencies</span>
+      <div class="skills-grid">
+        <div class="skills-col"><h4>🎤 HOST</h4><ul><li>Stage Hosting</li><li>Public Speaking</li><li>Audience Engagement</li><li>Student Interaction</li><li>Program Facilitation</li></ul></div>
+        <div class="skills-col"><h4>📋 COORDINATE</h4><ul><li>Event Coordination</li><li>Participant Management</li><li>Volunteer Coordination</li><li>Activity Coordination</li><li>Event Flow</li></ul></div>
+        <div class="skills-col"><h4>👥 PEOPLE</h4><ul><li>Crowd Management</li><li>Community Engagement</li><li>Student Engagement</li><li>Team Leadership</li><li>Communication</li></ul></div>
+        <div class="skills-col"><h4>⚡ EXECUTE</h4><ul><li>On-ground Operations</li><li>Problem Solving</li><li>Time Management</li><li>Adaptability</li><li>Teamwork</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section class="section-padding" id="about">
+    <div class="container about-grid">
+      <div class="about-text">
+        <span class="uppercase-label">About</span>
+        <h2 class="section-heading">MY EVENT <span class="gold">JOURNEY</span></h2>
+        <p>Enthusiastic and organized Computer Science graduate with hands-on experience in event hosting, event coordination, audience engagement, community programs, and on-ground event operations through Youth for Seva. Hosted and coordinated multi-school student programs, rural health camps, and school-based awareness initiatives.</p>
+        <p>Experienced in stage hosting, crowd management, participant coordination, volunteer teamwork, public communication, and engaging diverse student audiences. Recognized with the Seva Preraka Award for sustained community contribution.</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- ===== CHIGURU CASE STUDY ===== -->
+  <section class="case-study section-padding" id="chiguru">
+    <div class="container">
+      <h2 class="section-heading">EVENTS I'VE <span class="gold">HOSTED &amp; COORDINATED</span></h2>
+      <span class="uppercase-label">Featured Case Study</span>
+      <h3 style="font-family:var(--font-display); font-size:2.5rem; color:var(--accent);">CHIGURU- Youth For Seva</h3>
+      <div class="case-header">
+        <div class="case-meta">
+          <div class="case-meta-item"><strong>2023–2026</strong> 4 YEARS</div>
+          <div class="case-meta-item"><strong>1,500+</strong> STUDENTS</div>
+          <div class="case-meta-item"><strong>35+</strong> SCHOOLS</div>
+        </div>
+        <div><span class="skill-tag">EVENT HOST &amp; COORDINATOR</span></div>
+      </div>
+      <p style="color:var(--text-secondary); max-width:700px; margin-bottom:2rem;">Chiguru is a large student-focused program conducted by Youth for Seva for rural-area students. The program provides students with a platform to showcase their talents, creativity and skills — cultural activities, singing, dancing, sports, cooking, scientific experiments, clay modelling, rangoli, and more.</p>
+      
+
+      <!-- Host / Coordinate Cards -->
+      <div class="case-grid">
+        <div class="case-card"><h4>🎤 HOSTING</h4><ul><li>Stage Hosting — guided audience through segments</li><li>Public Communication — clear, energetic interaction</li><li>Audience Engagement — maintained involvement</li><li>Student Interaction — direct encouragement</li></ul><div class="skill-tags"><span class="skill-tag">Stage Hosting</span><span class="skill-tag">Public Speaking</span><span class="skill-tag">Audience Engagement</span></div></div>
+        <div class="case-card"><h4>📋 COORDINATION</h4><ul><li>Event Coordination — multi-activity execution</li><li>Participant Management — 1,500+ students</li><li>Volunteer Coordination — team alignment</li><li>Crowd Management · On-ground Execution</li></ul><div class="skill-tags"><span class="skill-tag">Volunteer Coordination</span><span class="skill-tag">Crowd Management</span><span class="skill-tag">Event Flow</span></div></div>
+      </div>
+
+      <!-- Gallery (4 images for Chiguru) -->
+      <div style="margin-top:3rem;">
+        <span class="uppercase-label">Gallery · Chiguru</span>
+        <div class="gallery-grid chiguru-gallery">
+
+          <div class="gallery-image">
+            <img src="assets/images/chiguru/chiguru-1.jpeg"
+                  alt="Rakshitha hosting Chiguru">
+          </div>
+
+          <div class="gallery-image">
+            <img src="assets/images/chiguru/chiguru-2.jpeg"
+                  alt="Chiguru Youth for Seva event">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-study section-padding" id="chiguru">
+    <div class="container">
+      <span class="uppercase-label"> </span>
+      <h3 style="font-family:var(--font-display); font-size:2.5rem; color:var(--accent);">STUDENT AWARENESS PROGRAMS</h3>
+      <div class="case-header">
+        <div class="case-meta">
+          <div class="case-meta-item"><strong>2022–2026</strong> 4 YEARS</div>
+          <div class="case-meta-item"><strong>1000+</strong> STUDENTS</div>
+          <div class="case-meta-item"><strong>10+</strong> SCHOOLS</div>
+        </div>
+        <div><span class="skill-tag">EVENT HOST &amp; COORDINATOR</span></div>
+      </div>
+      <p style="color:var(--text-secondary); max-width:700px; margin-bottom:2rem;"> Hosted and facilitated awareness programs covering Menstrual Health, Tobacco Awareness, Nutrition Awareness, and Women's Safety. Engaged students in open discussions and practical safety measures.</p>
+      <div class="case-grid" style="margin-top:2rem;">
+        <div class="case-card"><h4>🩸 Menstrual Health</h4><p style="color:var(--text-secondary);">School-based awareness program. <strong>Role:</strong> Host / Facilitator.</p><div class="skill-tags"><span class="skill-tag">Public Speaking</span><span class="skill-tag">Student Engagement</span></div></div>
+        <div class="case-card"><h4>🚭 Tobacco Awareness</h4><p style="color:var(--text-secondary);">Rural school awareness. <strong>Role:</strong> Host / Facilitator.</p><div class="skill-tags"><span class="skill-tag">Awareness Facilitation</span><span class="skill-tag">Audience Interaction</span></div></div>
+        <div class="case-card"><h4>🥗 Nutrition Awareness</h4><p style="color:var(--text-secondary);">Student-focused nutrition program. <strong>Role:</strong> Host / Facilitator.</p><div class="skill-tags"><span class="skill-tag">Program Coordination</span><span class="skill-tag">Communication</span></div></div>
+        <div class="case-card"><h4>🛡️ Women's Safety</h4><p style="color:var(--text-secondary);">Practical safety measures. <strong>Role:</strong> Host / Facilitator.</p><div class="skill-tags"><span class="skill-tag">Community Engagement</span><span class="skill-tag">Program Facilitation</span></div></div>
+        <div class="case-card"><h4>🧑‍🏫 Digital Literacy</h4><p style="color:var(--text-secondary);">Volunteer / Instructor for rural students.</p><div class="skill-tags"><span class="skill-tag">Instruction</span><span class="skill-tag">Mentoring</span></div></div>
+      </div>
+
+      <!-- Host / Coordinate Cards -->
+       <span class="uppercase-label">Key Skills </span>
+      <div class="case-grid">
+        <div class="case-card"><h4>🎤 HOSTING</h4><ul><li>Public speaking & student engagement</li><li>Facilitating discussions & Q&A</li><li>Student Interaction — direct encouragement</li></ul><div class="skill-tags"><span class="skill-tag">Stage Hosting</span><span class="skill-tag">Public Speaking</span><span class="skill-tag">Audience Engagement</span></div></div>
+        <div class="case-card"><h4>📋 COORDINATION</h4><ul><li>Program coordination</li><li>Student participation & session flow</li></ul><div class="skill-tags"><span class="skill-tag">Volunteer Coordination</span><span class="skill-tag">Crowd Management</span><span class="skill-tag">Event Flow</span></div></div>
+      </div>
+
+      <!-- Gallery (4 images for Chiguru) -->
+      <div style="margin-top:3rem;">
+        <span class="uppercase-label">Gallery · Awareness Programs</span>
+        <div class="gallery-grid awareness-gallery">
+
+          <div class="gallery-image">
+            <img src="assets/images/awareness/awareness-1.jpeg"
+                alt="Student awareness program">
+          </div>
+
+          <div class="gallery-image">
+            <img src="assets/images/awareness/awareness-2.jpeg"
+                alt="Awareness session with students">
+          </div>
+
+          <div class="gallery-image">
+            <img src="assets/images/awareness/awareness-3.jpeg"
+                alt="Rakshitha facilitating an awareness program">
+          </div>
+
+          <div class="gallery-image">
+            <img src="assets/images/awareness/awareness-4.jpeg"
+                alt="Youth for Seva awareness program">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-study section-padding" id="chiguru">
+    <div class="container">
+      <span class="uppercase-label">Additional Experience</span>
+      <h3 style="font-family:var(--font-display); font-size:2.5rem; color:var(--accent);">COMMUNITY EVENT SUPPORT</h3>
+      <div class="case-header">
+        <div class="case-meta">
+          <div class="case-meta-item"><strong>2022–2026</strong> 4 YEARS</div>
+        </div>
+        <div><span class="skill-tag">EVENT HOST &amp; COORDINATOR</span></div>
+      </div>
+      <p style="color:var(--text-secondary); max-width:700px; margin-bottom:2rem;"> Supported and coordinated diverse community initiatives through Youth for Seva, including heritage cleaning drives, rural health and blood donation camps, local festivals and cultural programs, student coaching, spoken English sessions, and sports activities. Contributed to participant coordination, volunteer teamwork, and smooth on-ground execution of community events.</p>
+      <div class="case-grid" style="margin-top:2rem;">
+        <div class="case-card"><h4>🧹 Heritage Cleaning</h4><p>Participated in heritage-site cleaning drives, contributing to the preservation of historical places while working collaboratively with volunteer teams.</p></div>
+        <div class="case-card"><h4>🏥 Rural Health Camp</h4><p>Supported a rural health camp organized by Youth for Seva in collaboration with Narayana Hrudayalaya, Chamarajanagar, helping coordinate participants and ensuring smooth on-ground event operations.</p></div>
+        <div class="case-card"><h4>🩸 Blood Donation Camps</h4><p>Supported blood donation camps and community health initiatives by assisting with participant coordination and on-ground event activities.</p></div>
+        <div class="case-card"><h4>🎭 Local Festivals &amp; Cultural</h4><p>Supported and coordinated local festivals, cultural programs, and community events, helping manage activities and encourage active participation.</p></div>
+        <div class="case-card"><h4>📚 Spoken English &amp; Coaching</h4><p>Conducted spoken English classes and supported board exam, NMMS, and NTSE coaching, helping students improve their communication, academic preparation, and confidence.</p></div>
+        <div class="case-card"><h4>🏅 Sports Activities</h4><p>Engaged students in sports activities, encouraging participation, teamwork, discipline, and confidence through collaborative activities.</p></div>
+      </div>
+
+      <!-- Gallery (4 images for Chiguru) -->
+      <div style="margin-top:3rem;">
+        <span class="uppercase-label">Gallery · Community Events</span>
+        <div class="gallery-grid">
+
+          <div class="gallery-image">
+            <img src="assets/images/community/community-1.jpeg"
+                alt="Community volunteering">
+          </div>
+
+          <div class="gallery-image">
+            <img src="assets/images/community/community-2.jpeg"
+                alt="Youth for Seva community event">
+          </div>
+
+          <div class="gallery-image">
+           <img src="assets/images/community/community-3.jpeg"
+                alt="Community event support">
+          </div>
+
+          <div class="gallery-image">
+           <img src="assets/images/community/community-4.jpeg"
+                alt="Community event support">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== QUOTE BANNER ===== -->
+  <section class="quote-banner">
+    <div class="container">
+      <h2>HOST. <span class="gold">COORDINATE.</span> ENGAGE. <span class="gold">EXECUTE.</span></h2>
+      <p>From the stage to the ground — every part of an event matters.</p>
+    </div>
+  </section>
+
+
+
+  <!-- ===== RECOGNITION ===== -->
+  <section class="section-padding" id="recognition">
+    <div class="container recognition-grid">
+      <div>
+        <span class="uppercase-label">Recognition</span>
+        <h2 class="section-heading">SEVA <span class="gold">PRERAKA</span></h2>
+        <p style="color:var(--text-secondary); font-size:1.2rem;">Youth for Seva · 400+ Hours of Volunteering</p>
+        <p style="color:var(--text-secondary); margin-top:1rem;">Recognized for sustained contribution to community service and volunteering through Youth for Seva.</p>
+        <div style="margin-top:1.5rem;"><span class="skill-tag">Award Ceremony</span><span class="skill-tag" style="margin-left:0.5rem;">Certificate</span></div>
+      </div>
+      <div class="recognition-image">
+        <img src="assets/images/recognition/seva-preraka.jpeg"
+            alt="Rakshitha receiving the Seva Preraka recognition">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EDUCATION ===== -->
+  <section class="section-padding" id="education" style="background:var(--bg-secondary);">
+    <div class="container">
+      <span class="uppercase-label">Education</span>
+      <h2 class="section-heading">ACADEMIC <span class="gold">BACKGROUND</span></h2>
+      <div class="edu-grid">
+        <div class="edu-card"><h4>B.E. Computer Science &amp; Engineering</h4><p>Government Engineering College, Chamarajanagar | 2022–2026</p><p style="color:var(--accent);">CGPA: 8.9/10</p></div>
+        <div class="edu-card"><h4>Pre-University (PCMB)</h4><p>KNC Innovative PU College, Mysuru | 2020–2022</p><p style="color:var(--accent);">Percentage: 89%</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="section-padding" id="contact">
+    <div class="container contact-grid">
+      <div>
+        <span class="uppercase-label">Connect</span>
+        <h2 class="section-heading">LET'S TALK <span class="gold"> </span></h2>
+        <p style="color:var(--text-secondary);">I'm available for event hosting, coordination, and program management opportunities.</p>
+        <div style="margin-top:2rem;">
+          
+          <div class="contact-item"><label>Location</label><p>Mysuru & Bengaluru , Karnataka, India</p></div>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--card-bg); padding:2rem; border-radius:8px; border:1px solid var(--border-gold);">
+          <p style="color:var(--text-secondary);">📌 <strong style="color:var(--text-primary);">Contact </strong></p>
+          <div class="contact-item"><label>Email</label><a href="mailto:rakshitha.gowdaa.b@gmail.com">rakshitha.gowdaa.b@gmail.com</a></div>
+          <div class="contact-item"><label>Phone</label><a href="tel:+919742929881">+91 9742929881</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <p>© 2026 RAKSHITHA B · Event Host &amp; Coordinator</p>
+      <p style="font-size:0.75rem; margin-top:0.5rem;">Real photographs only · Designed for recruiters</p>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPT ===== -->
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) navbar.classList.add('scrolled');
+      else navbar.classList.remove('scrolled');
+    });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    console.log('RAKSHITHA B · Event Host & Coordinator Portfolio');
+    console.log('Replace placeholder images with real event photographs in /assets/images/');
+  </script>
+</body>
+</html>
